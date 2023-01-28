@@ -1,6 +1,10 @@
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
+const cors = require('cors');
+
+app.use(cors());
+app.use(express.json());
 
 const uri = "mongodb+srv://1234567890:1234567890@cluster0.dhy8fo9.mongodb.net/?retryWrites=true&w=majority";
 
@@ -14,32 +18,48 @@ async function connect(){
     } catch (error) {
         console.error(error);
     }
-}
+};
 
 connect();
 
 const userSchema = new mongoose.Schema({
     username: String,
-    passsword: String,
-})
+    passsword: String
+});
 
 const User = mongoose.model('User', userSchema);
 
 const user = new User({
     username: 'jack',
     password: '12345'
-})
+});
 
 user.save((error) => {
     if (error) throw error;
     console.log("New user has been saved to the database successfully");
-})
+});
 
 
 app.get('/', (req, res)=> {
     res.send('Welcome to my game app!');
-})
+});
+
+app.post('/', (req, res) => {
+    const {username, password} = req.body;
+    const user = new User ({
+        username,
+        password,
+    });
+    user.save((error) => {
+        if (error){
+           res.status(500).send(error);
+        } else {
+            res.send('User saved to the database');
+        }
+    });
+});
+
 
 app.listen(3000, ()=> {
     console.log('Server listening on port 3000');
-})
+});

@@ -81,3 +81,17 @@ sudo npm install -g create-react-app
 ```
 npm i axios
 ```
+
+## Write The Server Code To Post Requests To The Database From The Client Side
+
+- install cors on server side.
+```
+npm i cors
+```
+
+##  Set Up Routing And Page Rendering With Navigation Dom Libraries in React
+
+- install react-router-dom
+```
+npm install react-router-dom
+```
